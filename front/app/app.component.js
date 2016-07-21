@@ -24,38 +24,46 @@ var AppComponent = (function () {
         this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfs[current]);
         this.currentFileName = this.pdfs[current].match("[^\/]*$")[0];
     };
+    AppComponent.prototype.goLeft = function () {
+        if (this.currentPdf === 0) {
+            this.currentPdf = this.pdfs.length - 1;
+            this.getBook();
+        }
+        else {
+            this.currentPdf -= 1;
+            this.getBook();
+        }
+    };
+    AppComponent.prototype.goRight = function () {
+        console.log("hi" + this.currentPdf);
+        if (this.currentPdf < this.pdfs.length - 1) {
+            this.currentPdf += 1;
+            this.getBook();
+        }
+        else {
+            console.log("hi");
+            this.currentPdf = 0;
+            this.getBook();
+        }
+    };
     AppComponent.prototype.onKey = function (event) {
         // console.log(event.keyCode);
         switch (event.keyCode) {
             // code...
             case 37:
                 // left 
-                if (this.currentPdf !== 0) {
-                    this.currentPdf -= 1;
-                    this.getBook();
-                }
-                else {
-                    this.currentPdf = this.pdfs.length - 1;
-                    this.getBook();
-                }
+                this.goLeft();
                 break;
             case 39:
                 // right
-                if (this.currentPdf < this.pdfs.length) {
-                    this.currentPdf += 1;
-                    this.getBook();
-                }
-                else {
-                    this.currentPdf = 0;
-                    this.getBook();
-                }
+                this.goRight();
                 break;
         }
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app',
-            template: "\n\n  \n\t<div (keyup)=\"onKey($event)\" class=\"overlay\">\n\t\t<div class=\"view\" (keyup)=\"onKey($event)\">\n\t\t\t<h2 class=\"title\">{{currentFileName}}</h2>\n\t\t\t<iframe class=\"file\" [src]=\"trustedUrl\"></iframe>\n\t\t\t<a (click)=\"onKey($event)\"><</a>\n\t\t</div>\n\t</div>\n\n\n\n\t<div class=\"wrapper\">\n\t  <form class=\"login\">\n\t    <p class=\"title\">Log in</p>\n\t    <input type=\"text\" placeholder=\"Username\" autofocus/>\n\t    <i class=\"fa fa-user\"></i>\n\t    <input type=\"password\" placeholder=\"Password\" />\n\t    <i class=\"fa fa-key\"></i>\n\t    <a href=\"#\">Forgot your password?</a>\n\t    <button>\n\t      <i class=\"spinner\"></i>\n\t      <span class=\"state\">Log in</span>\n\t    </button>\n\t  </form>\n</div>\n    ",
+            template: "\n\n  \n\t<div (keyup)=\"onKey($event)\" tabindex=\"0\" class=\"overlay\">\n\t\t<div class=\"view\" (keyup)=\"onKey($event)\">\n\t\t\t<h2 class=\"title\">{{currentFileName}}</h2>\n\t\t\t<iframe class=\"file\" [src]=\"trustedUrl\"></iframe>\n\t\t\t<a class=\"navLinks left\" (click)=\"goLeft()\"><i class=\"fa fa-arrow-left\" aria-hidden=\"true\"></i></a>\n\t\t\t<a class=\"navLinks right\" (click)=\"goRight()\"><i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i></a>\n\t\t</div>\n\t</div>\n\n\n\n\t<div class=\"wrapper\">\n\t  <form class=\"login\">\n\t    <p class=\"title\">Log in</p>\n\t    <input type=\"text\" placeholder=\"Username\" autofocus/>\n\t    <i class=\"fa fa-user\"></i>\n\t    <input type=\"password\" placeholder=\"Password\" />\n\t    <i class=\"fa fa-key\"></i>\n\t    <a href=\"#\">Forgot your password?</a>\n\t    <button>\n\t      <i class=\"spinner\"></i>\n\t      <span class=\"state\">Log in</span>\n\t    </button>\n\t  </form>\n</div>\n    ",
         }), 
         __metadata('design:paramtypes', [platform_browser_1.DomSanitizationService])
     ], AppComponent);

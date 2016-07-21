@@ -6,11 +6,12 @@ import {DomSanitizationService} from '@angular/platform-browser'
     template: `
 
   
-	<div (keyup)="onKey($event)" class="overlay">
+	<div (keyup)="onKey($event)" tabindex="0" class="overlay">
 		<div class="view" (keyup)="onKey($event)">
 			<h2 class="title">{{currentFileName}}</h2>
 			<iframe class="file" [src]="trustedUrl"></iframe>
-			<a (click)="onKey($event)"><</a>
+			<a class="navLinks left" (click)="goLeft()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+			<a class="navLinks right" (click)="goRight()"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 		</div>
 	</div>
 
@@ -50,6 +51,28 @@ export class AppComponent {
 		this.currentFileName = this.pdfs[current].match("[^\/]*$")[0];
 	}
 
+	goLeft(){
+		if(this.currentPdf === 0) {
+			this.currentPdf = this.pdfs.length - 1;
+			this.getBook();
+		} else {
+			this.currentPdf -=1;
+			this.getBook();
+		}
+	}
+
+	goRight(){
+		console.log("hi" + this.currentPdf);
+		if(this.currentPdf < this.pdfs.length - 1) {
+			this.currentPdf += 1;
+			this.getBook();
+		} else {
+			console.log("hi");
+			this.currentPdf = 0;
+			this.getBook();
+		}
+	}
+
 
 	onKey(event: KeyboardEvent){
 		// console.log(event.keyCode);
@@ -57,23 +80,11 @@ export class AppComponent {
 			// code...
 			case 37:
 			// left 
-			if(this.currentPdf !== 0) {
-				this.currentPdf -=1;
-				this.getBook();
-			} else {
-				this.currentPdf = this.pdfs.length - 1;
-				this.getBook();
-			}
+			this.goLeft();
 			break;
 			case 39:
 			// right
-			if(this.currentPdf < this.pdfs.length) {
-				this.currentPdf += 1;
-				this.getBook();
-			} else {
-				this.currentPdf = 0;
-				this.getBook();
-			}
+			this.goRight()
 			break;
 		}
 	}
