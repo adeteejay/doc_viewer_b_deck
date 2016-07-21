@@ -6,7 +6,13 @@ import {DomSanitizationService} from '@angular/platform-browser'
     template: `
 
   
-	<div class="overlay"><iframe class="child" [src]="trustedUrl"></iframe></div>
+	<div (keyup)="onKey($event)" class="overlay">
+		<div class="view" (keyup)="onKey($event)">
+			<h2 class="title">{{currentFileName}}</h2>
+			<iframe class="file" [src]="trustedUrl"></iframe>
+			<a (click)="onKey($event)"><</a>
+		</div>
+	</div>
 
 
 
@@ -28,10 +34,47 @@ import {DomSanitizationService} from '@angular/platform-browser'
 
 })
 export class AppComponent { 
-	pdfSrc: string = '/app/mockpdfs/algorithms.pdf';
-	trustedUrl:any;
+	pdfs: string[] = ['/app/mockpdfs/algorithms.pdf','/app/mockpdfs/algorithms1.pdf','/app/mockpdfs/algorithms2.pdf','/app/mockpdfs/algorithms3.pdf']
+	currentFileName: string;
+	trustedUrl: any;
+	currentPdf: number = 0;
 	page: number = 1;
+
 	constructor(public sanitizer: DomSanitizationService){
-		this.trustedUrl = sanitizer.bypassSecurityTrustResourceUrl(this.pdfSrc);
+		this.getBook();
+	}
+
+	getBook(){
+		let current = this.currentPdf;
+		this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.pdfs[current]);
+		this.currentFileName = this.pdfs[current].match("[^\/]*$")[0];
+	}
+
+
+	onKey(event: KeyboardEvent){
+		// console.log(event.keyCode);
+		switch(event.keyCode) {
+			// code...
+			case 37:
+			// left 
+			if(this.currentPdf !== 0) {
+				this.currentPdf -=1;
+				this.getBook();
+			} else {
+				this.currentPdf = this.pdfs.length - 1;
+				this.getBook();
+			}
+			break;
+			case 39:
+			// right
+			if(this.currentPdf < this.pdfs.length) {
+				this.currentPdf += 1;
+				this.getBook();
+			} else {
+				this.currentPdf = 0;
+				this.getBook();
+			}
+			break;
+		}
 	}
   }

@@ -8,6 +8,14 @@ body {
   body input[text], body button {
     color: #888;
     font-family: Cambria, Georgia; }
+  body .title {
+    color: #369;
+    text-align: center;
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 20px 0 40px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px; }
 
 h1 {
   color: #369;
@@ -102,14 +110,6 @@ button {
     font-size: 0.8em;
     color: #2196F3;
     text-decoration: none; }
-  .login .title {
-    color: #369;
-    text-align: center;
-    font-size: 1.6em;
-    font-weight: bold;
-    margin: 20px 0 40px 0;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px; }
   .login button {
     width: 100%;
     height: 100%;
@@ -161,14 +161,20 @@ button {
   z-index: 100;
   left: 0;
   background: rgba(15, 17, 19, 0.83); }
-  .overlay .child {
+  .overlay .view {
     max-width: 900px;
     width: 100%;
     height: 80%;
     padding: 20px;
     background: #fff;
-    border: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%); }
+  .overlay .file {
+    border: 0;
+    width: 100%;
+    height: 85%; }
+  .overlay .title {
+    margin: 20px;
+    border-bottom: 0; }
