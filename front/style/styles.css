@@ -83,11 +83,11 @@ button {
     border-left-width: 35px;
     color: #ccc; }
     .login input + i.fa {
-      color: #2196F3;
-      font-size: 1em;
+      color: #fff;
+      font-size: 1.2em;
       position: absolute;
-      margin-top: -47px;
-      opacity: 0;
+      margin-top: -63px;
+      opacity: .9;
       left: 30px;
       transition: all 0.1s ease-in; }
     .login input:focus {
@@ -151,3 +151,24 @@ button {
     box-shadow: 0px 1px 3px #2196F3; }
   .login:not(.loading) button:focus {
     border-bottom-width: 4px; }
+
+/* Document Viewer */
+.overlay {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  left: 0;
+  background: rgba(15, 17, 19, 0.83); }
+  .overlay .child {
+    max-width: 900px;
+    width: 100%;
+    height: 80%;
+    padding: 20px;
+    background: #fff;
+    border: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
