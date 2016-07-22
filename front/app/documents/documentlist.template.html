@@ -1,0 +1,46 @@
+<header>
+	<div class="logo"><i class="fa fa-pied-piper" aria-hidden="true"></i></div>
+	<ul class="header_nav">
+		<input type="text" name="search" class="search" placeholder="Search Files">
+		<li> <a href="#"><i class="fa fa-bell-o"></i></a></li>
+		<li> <a href="#"><i class="fa fa-question"></i></a></li>
+		
+	</ul>
+</header>
+<div class="main">
+	<aside class="sidebar">
+		<div class="sidebar_container">
+		  <nav>
+		    <ul class="sidebar_list">
+				<li> <a href="#"><i class="fa fa-files-o"></i> Files</a></li>
+				<li> <a href="#"><i class="fa fa-comments"></i> Messages</a></li>
+				<li> <a href="#"><i class="fa fa-users"></i> Users</a></li>
+				<li class="divider"></li>
+				<li> <a href="#"><i class="fa fa-trash"></i> Deleted</a></li>
+				<li> <a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+				<li> <a href="#"><i class="fa fa-exchange"></i> Transfer Queue</a></li>
+				<li class="divider"></li>
+				<li> <a href="#" (click)="logout()"><i class="fa fa-power-off"></i> Logout</a></li>      
+		    </ul>
+		  </nav>
+		</div>
+	</aside>
+	<div class="filesWrapper">
+		<ul class="files">
+			<li class="file" *ngFor="let file of pdfs; let i = index" (click)="showFile(i)">
+				<div class="image"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></div>
+				<div class="name">{{file.name}}</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div *ngIf="overlayShown"  tabindex="0" class="overlay">
+	<div class="view" (keyup)="onKey($event)" tabindex="0">
+		<a (click)="hideOverlay()" class="close-button"><i class="fa fa-close"></i></a>
+		<h2 class="title">{{currentFileName}}</h2>
+		<iframe class="file" [src]="trustedUrl"></iframe>
+		<a class="navLinks left" (click)="goLeft()"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+		<a class="navLinks right" (click)="goRight()"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+	</div>
+</div>
