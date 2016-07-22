@@ -5,9 +5,17 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var app = express();
 
+app.use('/files', express.static('files'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+   res.header('Access-Control-Allow-Headers', 'Origin, Content-Type');
+  next();
+});
 
 app.use('/', routes);
 

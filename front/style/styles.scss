@@ -1,23 +1,53 @@
+// imports
+@import "bourbon/bourbon";
+
+
+
 $primary: #2196F3;
+$black: #000;
 $white: #fff;
 $header_color: #369;
+$background: #f1f0ed;
+$sidebar: #282c37;
+$inputColor: #888; 
+$color : #444;
+$smoke: #eee;
+$green: #8bc34a;
+$lightBorder: #ddd;
+$red: #fd4747;
 
 
 // z index
-$top:100;
+$top:10;
+$header: 9;
 
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
 
+    &:-moz-placeholder { /* Firefox 18- */
+        @content;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+        @content;
+    }
+
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
 
 body {
   font-family: "Open Sans", sans-serif;
   height: 100vh;
-  background-color: #f1f0ed;
+  background-color: $background;
   background-size: cover;
   padding: 0;
   margin: 0;
   input[text], button { 
-    color: #888;
-    font-family: Cambria, Georgia;
+    color: $inputColor;
   }
 
   .title {
@@ -26,18 +56,28 @@ body {
     font-size: 1.6em;
     font-weight: bold;
     margin: 20px 0 40px 0;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid $smoke;
     padding-bottom: 20px;
+  }
+  p.error{
+    color:$red;
+    font-size: .7em;
+  }
+  input.error{
+    border-color: $red;
+    &:focus{
+      border-color: $red;
+    }
   }
 }
 h1 {
   color: $header_color;
-  font-family: Arial, Helvetica, sans-serif;   
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 250%;
 }
 h2, h3 { 
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;   
+  color: $color;
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
 a {
@@ -46,7 +86,7 @@ a {
 }
 button {
   font-family: Arial;
-  background-color: #eee;
+  background-color: $smoke;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
@@ -57,7 +97,7 @@ button {
     background-color: #cfd8dc;
   }
   &:disabled {
-    background-color: #eee;
+    background-color: $smoke;
     color: #aaa; 
     cursor: auto;
   }
@@ -79,11 +119,11 @@ button {
   padding: 10px 20px 20px 20px;
   width: 90%;
   max-width: 320px;
-  background: #ffffff;
+  background: $white;
   position: relative;
   padding-bottom: 80px;
-  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.15);
-  border: 1px solid  rgba(0, 0, 0, .2);
+  box-shadow: 0px 0px 12px rgba($black, 0.15);
+  border: 1px solid  rgba($black, .2);
 
   
   &.loading {
@@ -99,7 +139,7 @@ button {
   
   &.ok {
     button {
-      background-color: #8bc34a;
+      background-color: $green;
       .spinner{
         border-radius: 0;
         border-top-color: transparent;
@@ -116,7 +156,7 @@ button {
     padding: 15px 10px;
     margin-bottom: 30px;
     width: 100%;
-    border: 1px solid #ddd;
+    border: 1px solid $lightBorder;
     transition: border-width 0.2s ease;
     border-radius: 2px;
     border-left-width: 35px;
@@ -138,7 +178,7 @@ button {
         transition: all 0.25s ease-out;
       }
       outline: none;
-      color: #444;
+      color: $color;
       border-color: $primary;
       border-left-width: 35px;
     }
@@ -159,7 +199,7 @@ button {
     text-transform: uppercase;
     padding: 10px 10px;
     background: $primary;
-    color: #fff;
+    color: $white;
     display: block;
     font-size: .9rem;
     border: none;
@@ -179,8 +219,8 @@ button {
       width: 40px;
       height: 40px;
       position: absolute;
-      border: 4px solid #ffffff;
-      border-top-color: rgba(255,255,255,0.3);
+      border: 4px solid $white;
+      border-top-color: rgba($white,0.3);
       border-radius: 100%;
       left: 50%;
       top: 0;
@@ -218,6 +258,21 @@ button {
   left: 0;
   background: rgba(15,17,19,.83);
 
+  .close-button {
+      position: absolute;
+      background-color: $red;
+      padding: 5px 7px;
+      left: 0;
+      top: 0;
+      margin-left: -10px;
+      margin-top: -10px;
+      border-radius: 50%;
+      border: 2px solid $white;
+      color: $white;
+      -webkit-box-shadow: -4px -2px 6px 0px rgba($black, 0.1);
+      -moz-box-shadow: -4px -2px 6px 0px rgba($black, 0.1);
+      box-shadow: -3px 1px 6px 0px rgba($black, 0.1);
+  }
 
   .view {
     max-width: 900px;
@@ -241,8 +296,8 @@ button {
     border-bottom: 0;
   }
   .navLinks{
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    background: $white;
+    box-shadow: 0 1px 2px rgba($black, 0.2);
     border-radius: 50%;
     padding: 12px;
     position: absolute;
@@ -254,5 +309,184 @@ button {
   }
   .right{
     right: -16px;
+  }
+}
+
+
+header{
+  height: 50px;
+  width:100%;
+  @include linear-gradient(to top, darken($primary, 5%), $primary);
+  color: $white;
+  position: fixed;
+  top: 0;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  box-shadow: 0 1px 3px  rgba(0,0,0,.25);
+  z-index: $header;
+  
+  .logo{
+    float: left;
+    font-size: 2.5em;
+    margin: 7px 24px;
+    color: rgba($black,.5);
+  }
+  .header_nav{
+    float: right;
+    margin: 0;
+    list-style: none;
+
+    .search{
+      float: left;
+      margin: 10px;
+      height: 30px;
+      width: 210px;
+      padding: 0 10px;
+      outline: 0;
+      opacity: .5;
+      border-radius: 2px;
+      color: $white;
+      background: rgba($black, 0.18);
+      border: 1px solid rgba($black, 0.05);
+        @include placeholder {
+          color: rgba($white, .75);
+        }
+      &:focus{
+        opacity: 1;
+      }
+    }
+    li{
+      float: left;
+    }
+    a{
+      color: rgba($white, .75);
+      display: block;
+      height: 100%;
+      width: 60px;
+      text-align: center;
+      transition: all .5s ease-in-out;
+
+      &:hover {
+        background: rgba(0,0,0,.2);
+        color: $white;
+      }
+    }
+    i{
+      line-height: 3em;
+    }
+  }
+}
+
+.main{
+  display: flex;
+  flex-direction: row; 
+  flex-wrap: nowrap;
+  width: 100%;
+  min-height: 100%;
+  margin-top: 50px;
+
+  .sidebar {
+    flex: 0 0 170px;
+    position: relative;
+  }
+
+.sidebar_container {
+  background-color: $sidebar;
+  position: fixed;
+  height: 100%; 
+  width: 170px;
+}
+
+.sidebar_list {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin: 0 0 18px 0; 
+  padding: 0 30px;
+  font-size: 11.5px;
+  padding: 3px 0;
+  &.divider{
+    border-bottom: 1px solid rgba($white, .1);
+  }
+}
+
+a {
+  display: block;
+  text-transform: capitalize;
+  text-decoration: none;
+  padding-left: 10px;
+  color: rgba($white, .3);
+
+  &:hover{
+    color: $white;
+    i{ color: $white; }
+  }
+  i{
+    color: rgba($white, .6);
+    margin: 3px 7px;
+    font-size: 1.2em;
+  }
+}
+
+  .filesWrapper{
+    width: 100%;
+    padding: 10px;
+    flex: 1;
+
+    .files{
+      list-style: none;
+      display: flex;
+      flex-flow: row wrap;
+    }
+    .file{
+      width: 170px;
+      // flex: 1;
+      margin: 15px;
+      
+
+      .image{
+        color: red;
+        background: $white;
+        width: 75%;
+        padding: 40px 20px;
+        font-size: 3em;
+        text-align: center;
+        border-top: 1px solid $lightBorder;
+        border-left: 1px solid $lightBorder;
+        border-right: 1px solid $lightBorder;
+        transition: all .5s ease-in-out;
+      }
+      .name{
+        width: 75%;
+        background: $lightBorder;
+        padding: 10px 20px;
+        color: $color;
+        word-wrap: break-word;
+        border-bottom: 1px solid $lightBorder;
+        border-left: 1px solid $lightBorder;
+        border-right: 1px solid $lightBorder;
+        transition: all .5s ease-in-out;
+      }
+
+      &:hover{
+        cursor: pointer;
+        .image{
+          border-top: 1px solid $primary;
+          border-left: 1px solid $primary;
+          border-right: 1px solid $primary;
+        }
+        .name{
+          color: $white;
+          background: $primary;
+          border-bottom: 1px solid $primary;
+          border-left: 1px solid $primary;
+          border-right: 1px solid $primary;
+        }
+      }
+    }
   }
 }
